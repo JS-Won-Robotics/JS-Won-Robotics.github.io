@@ -25,6 +25,8 @@ Note: this machine has no local Ruby or running Docker daemon, so builds cannot 
 
 Pushing to `main` triggers `.github/workflows/pages-deploy.yml` (Ruby 3.3 → `jekyll build` → `deploy-pages`). The repo's Pages source must be "GitHub Actions". Changes limited to `README.md`, `LICENSE`, `CLAUDE.md`, or `.gitignore` do not trigger a deploy.
 
+The workflow deliberately does *not* use `actions/configure-pages`: this is a user site at the domain root, so `baseurl` in `_config.yml` is authoritative, and running a Pages API call before the build would report build success/failure as a Pages error. If `deploy-pages` fails with "Creating Pages deployment failed", Pages is not enabled for the repo — on a free plan that requires the repo to be public.
+
 This workflow was written for this repo; the template's own upstream workflows (`bad-pr`, `close-tests`, `jekyll-build`, `scrape_talks`) were deleted because they exist to maintain the template repository, not sites built from it.
 
 ## Content model
